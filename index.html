@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
 </head>
 
 <body>
@@ -19,7 +21,7 @@
             </header>
         </div>
 
-        <div class="player-container">
+        <div class="player-container" id="picks">
             <div class="player" id="obi">
                 <h6 class="player-name">Obi-Wan Kenobi</h6><img src="assets/images/obi.jpg" alt="Obi Wan">
                 <h6 class="hp">120</h6>
@@ -39,11 +41,13 @@
         </div>
         <div id="selection">
             <h3 id="player-label">Your Player</h3>
-            <div class="player-container">
+            <div class="player-container" id="player-choice">
             </div>
         </div>
+        
         <h3>Enemies Available To Attack</h3>
         <div id="available"></div>
+
         <h3>Fight Section</h3>
         <button>Attack</button>
         <h3>Defender</h3>
@@ -52,7 +56,6 @@
 
 
     <script src="assets/javascript/game.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </body>
 
 </html>

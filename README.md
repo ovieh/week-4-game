@@ -1,4 +1,4 @@
-#Star Wars RPG (For Educational Purposes Only)
+# Star Wars RPG (For Educational Purposes Only)
 
 1. Here's how the app works:
 
