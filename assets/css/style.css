@@ -5,6 +5,11 @@ body {
   
 }
 
+.container {
+    width: 85%;
+    margin-left: 10px;
+}
+
 .head {
     display: flex;
     justify-content: flex-end;
@@ -16,10 +21,10 @@ header {
     width: 300px;
 }
 
-#player-container{
+.player-container{
     display: flex;
     justify-content: flex-start;
-    margin-left: 5px;
+    height: 130px;
 }
 
 .player {
@@ -34,9 +39,18 @@ header {
   
 }
 
+/* #player-label {
+    margin
+} */
+
 img {
     height: 75%;
     width: 75%;
+}
+
+h3 {
+    font-size: 26px;
+    font-weight: 700px;
 }
 
 h6{
@@ -47,4 +61,9 @@ h6{
     position: absolute;
     top: 2px;
     text-align: center;
+}
+.hp {
+    position: absolute;
+    text-align: center;
+    top: 113px;
 }
