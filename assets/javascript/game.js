@@ -1,4 +1,5 @@
 'use strict';
+var count = 1;
 
 function character(name, hp, ap, cap) {
     this.characterName = name;
@@ -9,8 +10,8 @@ function character(name, hp, ap, cap) {
 
 var obi = new character("Obi Wan-Kinobi", 120, 15, 20);
 var luke = new character("Luke Skywalker", 100, 12, 25);
-var sidius = new character("Darth Sidius", 150, 25, 10);
-var darth = new character("Darth Maul", 180, 23, 8);
+var sidius = new character("Darth Sidius", 150,  18, 10);
+var darth = new character("Darth Maul", 180, 18, 8);
 
 function Game() {
     this.player = "";
@@ -19,9 +20,9 @@ function Game() {
 
 var game = new Game();
 
-function battle(attacker, defender) {
-    console.log(attacker.attackPower);
-}
+// function battle() {
+    
+// }
 
 $(function () {
     $(".player").one("click", function () {
@@ -68,7 +69,16 @@ $(function () {
     });
 
     $(document).on("click", "#attack", function () {
-        console.log(game.player.attackPower);
+        // console.log(game.player.attackPower);
+        game.defender.healthPoints -= game.player.attackPower*count;
+        game.player.healthPoints -= game.defender.attackPower;
+        count++;
+
+        $(".player h6.hp").html(game.player.healthPoints);
+        $(".defender h6.hp").html(game.defender.healthPoints);
+        // console.log(game.defender.attackPower*count);     
+        
+        
     });
 
 });
