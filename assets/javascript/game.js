@@ -23,15 +23,15 @@ var game = new Game();
 
 function battle() {
     game.defender.healthPoints -= game.player.attackPower * count;
-    $("#attacker").html("You attacked " + game.defender.characterName + " for " + game.player.attackPower * count);
+    $("#game-data").html("<div id='attacker'>" + "You attacked " + game.defender.characterName + " for " + game.player.attackPower * count + "</div>");
 
     game.player.healthPoints -= game.defender.counterAttackPower;
-    $("#defender").html(game.defender.characterName + " attacked you for " + game.defender.counterAttackPower);
+    $("#game-data").append("<div id='defender'>" + game.defender.characterName + " attacked you for " + game.defender.counterAttackPower + "</div>");
 
     count++;
 
-    $(".player h6.hp").html(game.player.healthPoints);
-    $(".defender h6.hp").html(game.defender.healthPoints);
+    $(".player h6.hp").text(game.player.healthPoints);
+    $(".defender h6.hp").text(game.defender.healthPoints);
 
 }
 //Choose Player
@@ -82,17 +82,21 @@ $(function () {
     $(document).on("click", "#attack", function () {
 
         if (game.defender.healthPoints > 0 && game.player.healthPoints > 0) {
-            battle();            
+            battle();
             if (game.player.healthPoints <= 0) {
-                $("#game-data").html("You have been defeated!");
-            }
-            else if (game.defender.healthPoints <= 0) {
+                $("#game-data").text("You have been defeated!");
+                // Remove other stuff here!
+            } else if (game.defender.healthPoints <= 0) {
                 $(".defender").detach();
-                $("#game-data").html("You have defeated " + game.defender.characterName + 
-                " , choose another player to attack!");
-                
+                $("#game-data").text("You have defeated " + game.defender.characterName +
+                    " , choose another player to attack!");
+            }
+            else if ($(".player-container").contents().length <=1 ) {
+                console.log("You won");
             }
         }
+
+
 
     });
 
