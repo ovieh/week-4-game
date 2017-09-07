@@ -8,10 +8,10 @@ function character(name, hp, ap, cap) {
     this.counterAttackPower = cap;
 }
 
-var obi = new character("Obi Wan-Kinobi", 120, 15, 20);
+var obi = new character("Obi Wan-Kinobi", 120, 8, 15);
 var luke = new character("Luke Skywalker", 100, 12, 25);
-var sidius = new character("Darth Sidius", 150,  18, 10);
-var maul = new character("Darth Maul", 180, 18, 8);
+var sidius = new character("Darth Sidius", 150, 18, 10);
+var maul = new character("Darth Maul", 180, 18, 20);
 var jar_jar = new character("Jar Jar Binks", 0, 1, 2);
 
 function Game() {
@@ -21,10 +21,20 @@ function Game() {
 
 var game = new Game();
 
-// function battle() {
-    
-// }
+function battle() {
+    game.defender.healthPoints -= game.player.attackPower * count;
+    $("#attacker").html("You attacked " + game.defender.characterName + " for " + game.player.attackPower * count);
 
+    game.player.healthPoints -= game.defender.counterAttackPower;
+    $("#defender").html(game.defender.characterName + " attacked you for " + game.defender.counterAttackPower);
+
+    count++;
+
+    $(".player h6.hp").html(game.player.healthPoints);
+    $(".defender h6.hp").html(game.defender.healthPoints);
+
+}
+//Choose Player
 $(function () {
     $(".player").one("click", function () {
         //$(this).siblings().hide();
@@ -48,7 +58,7 @@ $(function () {
                 break;
         }
     });
-
+    //Choose Defender
     $(document).on("click", ".available-players", function () {
         $(this).addClass("defender").removeClass("available-players");
         $(this).appendTo("#defender-area");
@@ -70,28 +80,20 @@ $(function () {
     });
 
     $(document).on("click", "#attack", function () {
-        // console.log(game.player.attackPower);
 
-        if(game.defender.healthPoints <= 0 ) {
-            //drop defender and have player choose new foe.
+        if (game.defender.healthPoints > 0 && game.player.healthPoints > 0) {
+            battle();            
+            if (game.player.healthPoints <= 0) {
+                $("#game-data").html("You have been defeated!");
+            }
+            else if (game.defender.healthPoints <= 0) {
+                $(".defender").detach();
+                $("#game-data").html("You have defeated " + game.defender.characterName + 
+                " , choose another player to attack!");
+                
+            }
         }
-        else if (game.player.health <= 0){ 
-            
-        }
-        game.defender.healthPoints -= game.player.attackPower*count;
-        $("#attacker").html("You attacked " + game.defender.characterName + " for " + game.player.attackPower*count);
-        
-        game.player.healthPoints -= game.defender.counterAttackPower;
-        $("#defender").html(game.defender.characterName + " attacked you for " + game.defender.counterAttackPower);
-        
-        count++;
 
-        $(".player h6.hp").html(game.player.healthPoints);
-        $(".defender h6.hp").html(game.defender.healthPoints);
-        // console.log(game.defender.attackPower*count);     
-        
-
-        
     });
 
 });
