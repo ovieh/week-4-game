@@ -9,10 +9,10 @@ function Character(name, hp, ap, cap) {
     this.counterAttackPower = cap;
 }
 
-var obi = new Character("Obi Wan-Kinobi", 120, 8, 15);
-var luke = new Character("Luke Skywalker", 100, 12, 25);
-var sidius = new Character("Darth Sidius", 150, 18, 10);
-var maul = new Character("Darth Maul", 180, 18, 20);
+var obi = new Character("Obi Wan-Kinobi", 105, 10, 15);
+var luke = new Character("Luke Skywalker", 90, 12, 18);
+var sidius = new Character("Darth Sidius", 110, 10, 15);
+var maul = new Character("Darth Maul", 108, 10, 12);
 
 function Game() {
     this.player = "";
@@ -20,7 +20,16 @@ function Game() {
 }
 
 var game = new Game();
+
+function restart() {
+    $("#restart").show();
+    $("#restart").click(function () {
+        location.reload();
+    });
+}
+
 $("#restart").hide();
+
 function battle() {
     game.defender.healthPoints -= game.player.attackPower * count;
     $("#game-data").html("<div id='attacker'>" + "You attacked " + game.defender.characterName + " for " + game.player.attackPower * count + "</div>");
@@ -32,7 +41,6 @@ function battle() {
 
     $(".player h6.hp").text(game.player.healthPoints);
     $(".defender h6.hp").text(game.defender.healthPoints);
-
 }
 //Choose Player
 $(function () {
@@ -82,11 +90,11 @@ $(function () {
 
     $(document).on("click", "#attack", function () {
 
-        if (game.defender.healthPoints > 0 && game.player.healthPoints > 0 && enemiesDefeated !== 3)  {
+        if (game.defender.healthPoints > 0 && game.player.healthPoints > 0 && enemiesDefeated !== 3) {
             battle();
             if (game.player.healthPoints <= 0) {
                 $("#game-data").text("You have been defeated!");
-                // Remove other stuff here!
+                restart();
             } else if (game.defender.healthPoints <= 0) {
                 $(".defender").detach();
                 $("#game-data").text("You have defeated " + game.defender.characterName +
@@ -96,11 +104,8 @@ $(function () {
             console.log("you won");
             $(".defender").hide();
             $("#game-data").html("You you defeated all your enemies, press restart to play again");
-
-            $("#restart").show();
-            $("#restart").click(function() {
-                location.reload();
-            });
+            restart();
         }
     });
 });
+
