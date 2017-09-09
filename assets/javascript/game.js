@@ -1,18 +1,18 @@
 'use strict';
 var count = 1;
+var enemiesDefeated = 0; //I couldn't figure out a way to the the game dynamically, so I copped out and used a counterg
 
-function character(name, hp, ap, cap) {
+function Character(name, hp, ap, cap) {
     this.characterName = name;
     this.healthPoints = hp;
     this.attackPower = ap;
     this.counterAttackPower = cap;
 }
 
-var obi = new character("Obi Wan-Kinobi", 120, 8, 15);
-var luke = new character("Luke Skywalker", 100, 12, 25);
-var sidius = new character("Darth Sidius", 150, 18, 10);
-var maul = new character("Darth Maul", 180, 18, 20);
-var jar_jar = new character("Jar Jar Binks", 0, 1, 2);
+var obi = new Character("Obi Wan-Kinobi", 120, 8, 15);
+var luke = new Character("Luke Skywalker", 100, 12, 25);
+var sidius = new Character("Darth Sidius", 150, 18, 10);
+var maul = new Character("Darth Maul", 180, 18, 20);
 
 function Game() {
     this.player = "";
@@ -20,7 +20,7 @@ function Game() {
 }
 
 var game = new Game();
-
+$("#restart").hide();
 function battle() {
     game.defender.healthPoints -= game.player.attackPower * count;
     $("#game-data").html("<div id='attacker'>" + "You attacked " + game.defender.characterName + " for " + game.player.attackPower * count + "</div>");
@@ -77,11 +77,12 @@ $(function () {
                 game.defender = maul;
                 break;
         }
+        enemiesDefeated++;
     });
 
     $(document).on("click", "#attack", function () {
 
-        if (game.defender.healthPoints > 0 && game.player.healthPoints > 0) {
+        if (game.defender.healthPoints > 0 && game.player.healthPoints > 0 && enemiesDefeated !== 3)  {
             battle();
             if (game.player.healthPoints <= 0) {
                 $("#game-data").text("You have been defeated!");
@@ -91,13 +92,15 @@ $(function () {
                 $("#game-data").text("You have defeated " + game.defender.characterName +
                     " , choose another player to attack!");
             }
-            else if ($(".player-container").contents().length <=1 ) {
-                console.log("You won");
-            }
+        } else {
+            console.log("you won");
+            $(".defender").hide();
+            $("#game-data").html("You you defeated all your enemies, press restart to play again");
+
+            $("#restart").show();
+            $("#restart").click(function() {
+                location.reload();
+            });
         }
-
-
-
     });
-
 });
