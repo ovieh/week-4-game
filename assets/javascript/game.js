@@ -1,6 +1,8 @@
 'use strict';
 var count = 1;
 var enemiesDefeated = 0; //I couldn't figure out a way to the the game dynamically, so I copped out and used a counterg
+var defenderPicked = false;
+
 
 function Character(name, hp, ap, cap) {
     this.characterName = name;
@@ -68,8 +70,11 @@ $(function () {
     });
     //Choose Defender
     $(document).on("click", ".available-players", function () {
-        $(this).addClass("defender").removeClass("available-players");
-        $(this).appendTo("#defender-area");
+        if(!defenderPicked) {
+            $(this).addClass("defender").removeClass("available-players");
+            $(this).appendTo("#defender-area");
+        }
+
 
         switch ($(this).attr("id")) {
             case "obi":
@@ -86,6 +91,7 @@ $(function () {
                 break;
         }
         enemiesDefeated++;
+        defenderPicked = true;
     });
 
     $(document).on("click", "#attack", function () {
@@ -96,6 +102,7 @@ $(function () {
                 $("#game-data").text("You have been defeated!");
                 restart();
             } else if (game.defender.healthPoints <= 0) {
+                defenderPicked = false;
                 $(".defender").detach();
                 $("#game-data").text("You have defeated " + game.defender.characterName +
                     " , choose another player to attack!");
