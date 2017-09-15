@@ -98,16 +98,16 @@ $(function () {
 
         if (game.defender.healthPoints > 0 && game.player.healthPoints > 0 && enemiesDefeated !== 3) {
             battle();
-            if (game.player.healthPoints <= 0) {
+            if (game.player.healthPoints <= 0 && defenderPicked) {
                 $("#game-data").text("You have been defeated!");
                 restart();
-            } else if (game.defender.healthPoints <= 0) {
+            } else if (game.defender.healthPoints <= 0  && defenderPicked) {
                 defenderPicked = false;
                 $(".defender").detach();
                 $("#game-data").text("You have defeated " + game.defender.characterName +
                     " , choose another player to attack!");
             }
-        } else {
+        } else if (defenderPicked){
             console.log("you won");
             $(".defender").hide();
             $("#game-data").html("You you defeated all your enemies, press restart to play again");
